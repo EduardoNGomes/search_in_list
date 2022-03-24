@@ -1,0 +1,92 @@
+from time import sleep
+
+dados = []
+user = []
+formatacao = ['Nome', 'Email', 'Telefone', 'Idade']
+
+while True:
+    user.append(str(input('Digite o nome do cliente: ')))
+    user.append(str(input('Digite o email do cliente: ')))
+    
+    while True:
+        numero = str(input('Digite o telefone(9 digitos) do cliente: '))
+        if len(numero) == 9 and numero.isnumeric():
+            break  
+        else:
+            print('\033[31mOPCAO INVALIDA\033[m')
+    user.append(numero)
+
+    while True:
+        idade = str(input('Digite a idade do cliente: '))
+        if idade.isnumeric():
+            idade = int(idade)
+            break
+        else:
+            print('\033[31mOPCAO INVALIDA\033[m')
+    user.append(idade)
+
+
+    dados.append(user[:])
+
+    user.clear()
+
+
+    while True:
+        user_ans = str(input('Deseja continuar [S/N]? ')).strip()[0]
+        if user_ans in 'SsNn':
+            break
+        else:
+            print('\033[31mOPCAO INVALIDA\033[m')
+    if user_ans in 'Nn':
+        break
+
+
+print(dados)
+print('+-'*20)
+print(f'{"PESQUISA":^40}')
+print('+-'*20)
+
+print()
+print(f'\033[7m{"Nr":<5}{"DADOS":<10}\033[m')
+for v,i in enumerate(formatacao):
+    print(f'{v:<5}{i:<10}')
+while True:
+    user_select = str(input('Qual o nr do dado que voce deseja pesquisar? '))
+    if user_select.isnumeric():
+        user_select = int(user_select)
+        if user_select < len(formatacao):
+            break
+        else:
+            print('\033[31mOPCAO INVALIDA\033[m')
+    else:
+        print('\033[31mOPCAO INVALIDA\033[m')
+
+print(f'Na opcao selecionada voce possui as seguintes informacao: ')
+print(f'\033[7m{"Nr":<5}{formatacao[user_select]:<10}\033[m')
+for v,i in enumerate(dados):
+    print(f'{v:<5}{i[user_select]:<10}')
+
+while True:
+    user_result = str(input(f'Deseja exibir as informacoes de qual item (0 ate {len(dados)-1})?'))
+    if user_result.isnumeric():
+        user_result = int(user_result)
+        if user_result < len(dados):
+            break
+        else:
+            print('\033[31mOPCAO INVALIDA\033[m')
+    else:
+        print('\033[31mOPCAO INVALIDA\033[m')
+
+print('Carregando...')
+sleep(1)
+print('+-'*20)
+print(f'{"RESULTADO DA BUSCA":^40}')
+print('+-'*20)
+
+
+for v,i in enumerate(formatacao):
+    print(f'{i:<8}:\033[34m{dados[user_result][v]:<}\033[m')
+    
+
+
+
